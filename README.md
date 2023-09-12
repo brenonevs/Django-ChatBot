@@ -1,2 +1,2 @@
 # Django-ChatBot
- Um bot político inovador com a API do ChatGPT. Fomentando debates informados e promovendo participação cívica.
+No vasto cenário tecnológico, onde a política e a interação humana estão constantemente evoluindo, emerge um projeto audacioso que promete revolucionar a forma como discutimos política. Utilizando a poderosa combinação de Django, um popular framework web em Python, e a API do ChatGPT, este projeto visa criar um bot capaz de envolver-se em debates políticos de maneira inteligente e informativa.
