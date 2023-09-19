@@ -22,17 +22,18 @@
 
     .message-text {
       padding: 10px;
-      border-radius: 5px;
     }
 
     .sent {
       background-color: #dcf8c6;
       align-self: flex-end;
+      border-radius: 7px;
     }
 
     .received {
       background-color: #f1f0f0;
       align-self: flex-start;
+      border-radius: 7px;
     }
 
     .message-form {
@@ -47,33 +48,38 @@
 
     .message-input {
       flex: 1;
-      border-radius: 0;
+      border-radius: 7px;
       border-right: none;
     }
 
     .btn-send {
-      border-radius: 0;
+      border-radius: 7px;
     }
 
     .chat-container {
       height: 100%;
       display: flex;
       flex-direction: column;
+      border-radius: 7px;
     }
+
   </style>
 {% endblock %}
 
 
 {% block content %}
 <div class="chat-container">
+  <!-- Adicione a div para a foto e o texto -->
+  <div class="header-container text-center">
+    <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F189%2F189533.png&tbnid=zzo885mdivPhpM&vet=12ahUKEwjw95_wwrWBAxXVR7gEHaqkC0oQMygEegQIARBe..i&imgrefurl=https%3A%2F%2Fwww.flaticon.com%2Fbr%2Ficone-gratis%2Fpersonagem_189533&docid=AOoQJSLI547UiM&w=512&h=512&q=icones%20de%20personagens&ved=2ahUKEwjw95_wwrWBAxXVR7gEHaqkC0oQMygEegQIARBe" alt="Foto do Doutrinator">
+    <h1 class="mt-2">Chat com Doutrinator</h1>
+  </div>
+
   <div class="card flex-grow-1">
-    <div class="card-header bg-primary text-white">Chat com Doutrinator</div>
     <div class="card-body messages-box">
-      
       <ul class="list-unstyled messages-list">
-        
         <li class="message received">
-          <div class="message-text">
+          <div class="message-text" style="border-radius: 10px;">
             <div class="message-sender">
               <b>Doutrinator</b>
             </div>
