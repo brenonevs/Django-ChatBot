@@ -1,20 +1,29 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from langchain.chains.conversation.memory import ConversationBufferMemory
+from langchain import OpenAI
+from langchain.chains import ConversationChain
 import openai
 
-openai_api_key = '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'
-openai.api_key = openai_api_key
+llm = OpenAI(model_name='text-davinci-003', temperature=0, max_tokens=256, openai_api_key="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")
+
+memory = ConversationBufferMemory() 
+
+conversation = ConversationChain(llm=llm, verbose=True, memory=memory)
+
+def get_last_line(text):
+
+    lines = text.split('\n')
+    lines = [line.strip() for line in lines if line.strip()]
+    last_line = str(lines[-1]) if lines else None
+    last_line = last_line.replace("AI:", "").strip()
+    return last_line
 
 def ask_openai(message):
-    response = openai.Completion.create(
-        model = "text-davinci-003",
-        prompt = f'Faça uma posição sobre a minha ideologia política e dê detalhes a partir das seguintes afirmações: {message}',
-        max_tokens = 1000,
-        n = 1,
-        stop = None,
-        temperature = 0.7,
-    )
-    answer = response.choices[0].text.strip('.')
+    conversation.predict(input=message)
+
+    answer = get_last_line(conversation.memory.buffer)
+
     return answer
 
 def chatbot(request):
