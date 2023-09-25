@@ -5,7 +5,7 @@ from langchain import OpenAI
 from langchain.chains import ConversationChain
 import openai
 
-llm = OpenAI(model_name='text-davinci-003', temperature=0, max_tokens=256, openai_api_key="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")
+llm = OpenAI(model_name='gpt-3.5-turbo-0613', temperature=0, max_tokens=256, openai_api_key="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")
 
 memory = ConversationBufferMemory() 
 
@@ -32,3 +32,6 @@ def chatbot(request):
         response = ask_openai(message)
         return JsonResponse({'message': message, 'response': response})
     return render(request, 'chatbot.html') 
+
+def home(request):
+    return render(request, 'index.html') 
