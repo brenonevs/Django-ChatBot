@@ -2,7 +2,8 @@
 
 {% block styles %}
 <style>
-  body, html {
+  body,
+  html {
     height: 100%;
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
@@ -29,7 +30,7 @@
 
   .message-text {
     padding: 15px 20px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
   }
 
   .sent {
@@ -103,7 +104,9 @@
 <div class="chat-container">
   <!-- Adicione a div para a foto e o texto -->
   <div class="header-container text-center">
-    <img class="image"src="https://cdn.discordapp.com/attachments/1093675741880799345/1154596619401039902/fantinha1_Please_create_a_cartoon-style_artistic_depiction_of_a_f538d563-b6ee-44be-a5d7-a967917a4961.png" alt="Foto do Doutrinator">
+    <img class="image"
+      src="https://cdn.discordapp.com/attachments/1093675741880799345/1154596619401039902/fantinha1_Please_create_a_cartoon-style_artistic_depiction_of_a_f538d563-b6ee-44be-a5d7-a967917a4961.png"
+      alt="Foto do Doutrinator">
     <h1 class="mt-2">Chat com Doutrinator</h1>
   </div>
 
@@ -121,7 +124,7 @@
           </div>
         </li>
       </ul>
-      
+
     </div>
     <br><br>
     <br><br>
@@ -139,8 +142,8 @@
 </div>
 
 <script>
- 
- const messagesList = document.querySelector('.messages-list');
+
+  const messagesList = document.querySelector('.messages-list');
   const messageForm = document.querySelector('.message-form');
   const messageInput = document.querySelector('.message-input');
 
@@ -172,7 +175,8 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-        'message': message
+        'message': message,
+        'character_id': '{{ character.id }}'
       })
     })
       .then(response => response.json())

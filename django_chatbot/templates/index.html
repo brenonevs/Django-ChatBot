@@ -162,22 +162,32 @@
         Seu navegador não suporta o elemento de vídeo.
     </video>
 
-    <img id="circular-image" src="https://cdn.discordapp.com/attachments/1093675741880799345/1154596619401039902/fantinha1_Please_create_a_cartoon-style_artistic_depiction_of_a_f538d563-b6ee-44be-a5d7-a967917a4961.png" alt="Descrição da imagem">
+    <img id="circular-image"
+        src="https://cdn.discordapp.com/attachments/1093675741880799345/1154596619401039902/fantinha1_Please_create_a_cartoon-style_artistic_depiction_of_a_f538d563-b6ee-44be-a5d7-a967917a4961.png"
+        alt="Descrição da imagem">
 
     <div id="text-box">
         <div id="welcome-text-top">BEM VINDO AO</div>
         <div id="welcome-text-bottom">DOUTRINATOR</div>
     </div>
 
-    <a href="{% url 'chatbot' %}">
-        <button id="chat-button">Conversar com o Doutrinator</button>
-    </a>
+    <select id="character-select">
+        <option value="1">Bolsonaro</option>
+        <option value="2">Lula</option>
+    </select>
+    <button onclick="startChat()" id="chat-button">Conversar com o Doutrinator</button>
 
-    <button id="unmute-button">Ativar Som</button>j
+    <!-- <button id="unmute-button">Ativar Som</button> -->
     <audio id="play-sound" src="{% static 'videos/sound.mp3'%}" preload="auto" muted></audio>
 
     <script>
-        window.onload = function() {
+        function startChat() {
+            const characterSelect = document.getElementById('character-select');
+            const selectedCharacterId = characterSelect.value;
+            window.location.href = `{% url 'chatbot' %}?character_id=${selectedCharacterId}`;
+        }
+
+        window.onload = function () {
             const image = document.getElementById("circular-image");
             const audio = document.getElementById("play-sound");
             const unmuteButton = document.getElementById("unmute-button");
@@ -186,7 +196,7 @@
                 image.style.opacity = "1";
             }, 100);
 
-            unmuteButton.addEventListener('click', function() {
+            unmuteButton.addEventListener('click', function () {
                 // Tente reproduzir o áudio
                 let playPromise = audio.play();
 
