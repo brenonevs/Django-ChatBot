@@ -16,30 +16,15 @@ from .models import Character
 
 
 class ChatbotView(View):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    """ def _get_last_line(self, text):
-        #Extract the last non-empty line from the text, and remove 'AI:' prefix if present.
-        lines = [line.strip() for line in text.split("\n") if line.strip()]
-        last_line = lines[-1] if lines else ""
-        return last_line.replace("AI:", "").strip() """
-
-    def _process_message(self, message):
-        return self.conversation.run(input=message)
-
-    def get(self, request):
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
         load_dotenv()
-
-        character_id = request.GET.get("character_id")
-        character = get_object_or_404(Character, id=character_id)
 
         self.chat_model = ChatOpenAI(
             model_name="gpt-3.5-turbo-0613",
             temperature=0,
             max_tokens=1024,
         )
-
         self.system_message_template = SystemMessagePromptTemplate.from_template(
             "Você é Doutrinator, um político especialista, capaz de identificar a idelogia de qualquer pessoa a partir do que ela diz. Após a primeira frase dela, você deve dizer sua ideologia política."
         )
@@ -69,7 +54,15 @@ class ChatbotView(View):
             memory=self.memory,
         )
 
-        return render(request, "chatbot.html", {"character": character})
+    def _process_message(self, message):
+        return self.conversation.run(input=message)
+
+    def get(self, request):
+        character_id = request.GET.get("character_id")
+        # character = get_object_or_404(Character, id=character_id)
+
+        # return render(request, "chatbot.html", {"character": character})
+        return render(request, "chatbot.html")
 
     def post(self, request):
         """Handle POST requests and return the response from OpenAI."""
