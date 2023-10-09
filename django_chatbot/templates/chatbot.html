@@ -142,60 +142,58 @@
 </div>
 
 <script>
+  $(document).ready(function () {
+    const messagesList = $('.messages-list');
+    const messageForm = $('.message-form');
+    const messageInput = $('.message-input');
 
-  const messagesList = document.querySelector('.messages-list');
-  const messageForm = document.querySelector('.message-form');
-  const messageInput = document.querySelector('.message-input');
+    messageForm.on('submit', function (event) {
+      event.preventDefault();
 
-  messageForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+      const message = messageInput.val().trim();
+      if (message.length === 0) {
+        return;
+      }
 
-    const message = messageInput.value.trim();
-    if (message.length === 0) {
-      return;
-    }
-
-    const messageItem = document.createElement('li');
-    messageItem.classList.add('message', 'sent');
-    messageItem.innerHTML = `
-        <div class="message-text">
-            <div class="message-sender">
-                <b>Você</b>
+      const messageItem = $('<li></li>').addClass('message sent').html(`
+            <div class="message-text">
+                <div class="message-sender">
+                    <b>Você</b>
+                </div>
+                <div class="message-content">
+                    ${message}
+                </div>
             </div>
-            <div class="message-content">
-                ${message}
-            </div>
-        </div>`;
-    messagesList.appendChild(messageItem);
+        `);
+      messagesList.append(messageItem);
 
-    messageInput.value = '';
+      messageInput.val('');
 
-    fetch('', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-        'message': message,
-        'character_id': '{{ character.id }}'
+      fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val(),
+          'message': message,
+          'character_id': '{{ character.id }}'
+        })
       })
-    })
-      .then(response => response.json())
-      .then(data => {
-        const response = data.response;
-        const messageItem = document.createElement('li');
-        messageItem.classList.add('message', 'received');
-        messageItem.innerHTML = `
-        <div class="message-text">
-            <div class="message-sender">
-              <b>Doutrinator</b>
-            </div>
-            <div class="message-content">
-                ${response}
-            </div>
-        </div>
-          `;
-        messagesList.appendChild(messageItem);
-      });
+        .then(response => response.json())
+        .then(data => {
+          const response = data.response;
+          const messageItem = $('<li></li>').addClass('message received').html(`
+                    <div class="message-text">
+                        <div class="message-sender">
+                          <b>Doutrinator</b>
+                        </div>
+                        <div class="message-content">
+                            ${response}
+                        </div>
+                    </div>
+                `);
+          messagesList.append(messageItem);
+        });
+    });
   });
 
 </script>
