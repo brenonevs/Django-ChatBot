@@ -18,15 +18,23 @@ from .models import Character
 class ChatbotView(View):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
+
         load_dotenv()
 
+        character_id = request.GET.get("character_id")
+
+        try:
+            self.character = get_object_or_404(Character, id=character_id)
+        except Exception:
+            self.character = get_object_or_404(Character, name="Doutrinator")
+
         self.chat_model = ChatOpenAI(
-            model_name="gpt-3.5-turbo-0613",
+            model=self.character.chat_model_name,
             temperature=0,
             max_tokens=1024,
         )
         self.system_message_template = SystemMessagePromptTemplate.from_template(
-            "Você é Doutrinator, um político especialista, capaz de identificar a idelogia de qualquer pessoa a partir do que ela diz. Após a primeira frase dela, você deve dizer sua ideologia política."
+            self.character.prompt
         )
         self.message_placeholder = MessagesPlaceholder(variable_name="chat_history")
         self.human_message_template = HumanMessagePromptTemplate.from_template(
@@ -58,11 +66,7 @@ class ChatbotView(View):
         return self.conversation.run(input=message)
 
     def get(self, request):
-        character_id = request.GET.get("character_id")
-        # character = get_object_or_404(Character, id=character_id)
-
-        # return render(request, "chatbot.html", {"character": character})
-        return render(request, "chatbot.html")
+        return render(request, "chatbot.html", {"character": self.character})
 
     def post(self, request):
         """Handle POST requests and return the response from OpenAI."""
@@ -76,5 +80,5 @@ class ChatbotView(View):
 
 class HomeView(View):
     def get(self, request):
-        """Render the home page."""
-        return render(request, "index.html")
+        context = {"characters": Character.objects.all()}
+        return render(request, "index.html", context=context)

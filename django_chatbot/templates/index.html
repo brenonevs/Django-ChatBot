@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vídeo de Fundo e Imagem Fade-In</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -172,8 +172,9 @@
     </div>
 
     <select id="character-select">
-        <option value="1">Bolsonaro</option>
-        <option value="2">Lula</option>
+        {% for character in characters %}
+        <option value="{{character.id}}">{{character.name}}</option>
+        {% endfor %}
     </select>
     <button onclick="startChat()" id="chat-button">Conversar com o Doutrinator</button>
 
@@ -182,37 +183,37 @@
 
     <script>
         function startChat() {
-            const characterSelect = document.getElementById('character-select');
-            const selectedCharacterId = characterSelect.value;
+            const selectedCharacterId = $('#character-select').val();
             window.location.href = `{% url 'chatbot' %}?character_id=${selectedCharacterId}`;
         }
 
-        window.onload = function () {
-            const image = document.getElementById("circular-image");
-            const audio = document.getElementById("play-sound");
-            const unmuteButton = document.getElementById("unmute-button");
+        $(document).ready(function () {
+            const $image = $("#circular-image");
+            const $audio = $("#play-sound");
+            const $unmuteButton = $("#unmute-button");
 
             setTimeout(() => {
-                image.style.opacity = "1";
+                $image.css('opacity', '1');
             }, 100);
 
-            unmuteButton.addEventListener('click', function () {
-                // Tente reproduzir o áudio
-                let playPromise = audio.play();
+            $unmuteButton.on('click', function () {
+                // Try to play the audio
+                let playPromise = $audio[0].play();
 
-                // Se houver um erro, log no console
+                // If there's an error, log it to the console
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.log("Erro na reprodução do áudio:", error);
                     }).then(() => {
-                        // Se o áudio começar a tocar, esconda o botão
-                        if (!audio.paused) {
-                            unmuteButton.style.display = 'none';
+                        // If the audio starts playing, hide the button
+                        if (!$audio[0].paused) {
+                            $unmuteButton.css('display', 'none');
                         }
                     });
                 }
             });
-        };
+        });
+
     </script>
 </body>
 
