@@ -13,6 +13,9 @@ from langchain.prompts import (
     ChatPromptTemplate,
 )
 from .models import Character
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ChatbotView(View):
@@ -63,6 +66,7 @@ class ChatbotView(View):
         )
 
     def _process_message(self, message):
+        logger.info(f"Sending message to chatbot: {message}")
         return self.conversation.run(input=message)
 
     def get(self, request):
@@ -70,11 +74,14 @@ class ChatbotView(View):
 
     def post(self, request):
         """Handle POST requests and return the response from OpenAI."""
+        logger.info(f"POST request to ChatbotView: {request.POST}")
         message = request.POST.get("message")
         if not message:
+            logger.warning("POST request was made to ChatbotView without message")
             return JsonResponse({"error": "Message is required"}, status=400)
 
         response = self._process_message(message)
+        logger.info(f"Chatbot response: {response}")
         return JsonResponse({"message": message, "response": response})
 
 

@@ -54,7 +54,7 @@ class ChatSeleniumTestCase(LiveServerTestCase):
         send_button.click()
 
         # Wait for the message to be sent and the response to arrive
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 20).until(
             lambda driver: len(
                 driver.find_elements(By.CSS_SELECTOR, ".messages-list li")
             )

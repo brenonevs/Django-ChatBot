@@ -179,7 +179,6 @@ Chat com Doutrinator
         body: new URLSearchParams({
           'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val(),
           'message': message,
-          'character_id': '{{ character.id }}'
         })
       })
         .then(response => response.json())
