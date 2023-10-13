@@ -5,14 +5,14 @@ from django.shortcuts import get_object_or_404
 from langchain.chains.conversation.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain
 from langchain.chat_models import ChatOpenAI
-from dotenv import load_dotenv
 from langchain.prompts import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate,
     MessagesPlaceholder,
     ChatPromptTemplate,
 )
-from .models import Character
+from decouple import config
+from .models import Character, UserMessage, CharacterMessage, Conversation
 import logging
 
 logger = logging.getLogger(__name__)
@@ -22,8 +22,6 @@ class ChatbotView(View):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
 
-        load_dotenv()
-
         character_id = request.GET.get("character_id")
 
         try:
@@ -32,6 +30,7 @@ class ChatbotView(View):
             self.character = get_object_or_404(Character, name="Doutrinator")
 
         self.chat_model = ChatOpenAI(
+            openai_api_key=str(config("OPENAI_API_KEY")),
             model=self.character.chat_model_name,
             temperature=0,
             max_tokens=1024,
@@ -58,16 +57,18 @@ class ChatbotView(View):
             return_messages=True,
         )
 
-        self.conversation = ConversationChain(
+        self.conversation_chain = ConversationChain(
             llm=self.chat_model,
             prompt=self.prompt,
             verbose=True,
             memory=self.memory,
         )
 
+        self.conversation = Conversation.objects.create(character=self.character)
+
     def _process_message(self, message):
         logger.info(f"Sending message to chatbot: {message}")
-        return self.conversation.run(input=message)
+        return self.conversation_chain.run(input=message)
 
     def get(self, request):
         return render(request, "chatbot.html", {"character": self.character})
@@ -80,7 +81,12 @@ class ChatbotView(View):
             logger.warning("POST request was made to ChatbotView without message")
             return JsonResponse({"error": "Message is required"}, status=400)
 
+        UserMessage.objects.create(content=message)
+
         response = self._process_message(message)
+
+        CharacterMessage.objects.create(sender=self.character, content=response)
+
         logger.info(f"Chatbot response: {response}")
         return JsonResponse({"message": message, "response": response})
 
