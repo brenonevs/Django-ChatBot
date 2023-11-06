@@ -1,0 +1,227 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+:root {
+    /*
+    --body_gradient_left:#e7e7e7;
+    --body_gradient_right: #9b9b9b;
+  */
+    --body_gradient_left: #696566;
+    --body_gradient_right: #504d4e;
+    --form_bg: #ffffff;
+    --input_bg: #E5E5E5;
+    --input_hover: #eaeaea;
+    --submit_bg: #504d4e;
+    --submit_hover: #6b6b6b;
+    --icon_color: #6b6b6b;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* make the body full height*/
+    height: 100vh;
+    /* set our custom font */
+    font-family: 'Roboto',
+        sans-serif;
+    /* create a linear gradient*/
+    background-image: linear-gradient(to right, var(--body_gradient_left), var(--body_gradient_right));
+    display: flex;
+}
+
+#form_wrapper {
+    width: 1000px;
+    height: 700px;
+    /* this will help us center it*/
+    margin: auto;
+    background-color: var(--form_bg);
+    border-radius: 50px;
+    /* make it a grid container*/
+    display: grid;
+    /* with two columns of same width*/
+    grid-template-columns: 1fr 1fr;
+    /* with a small gap in between them*/
+    grid-gap: 5vw;
+    /* add some padding around */
+    padding: 5vh 15px;
+}
+
+#form_left {
+    /* center the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#form_left img {
+    width: 345px;
+    height: 345px;
+    border-radius: 50%;
+    /* transforma a imagem em um círculo */
+}
+
+#form_right {
+    height: 100%;
+    display: grid;
+    /* single column layout */
+    grid-template-columns: 1fr;
+    /* have some gap in between elements*/
+    grid-gap: 20px;
+    padding: 10% 5%;
+}
+
+.input_container {
+    background-color: var(--input_bg);
+    /* vertically align icon and text inside the div*/
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.input_container:hover {
+    background-color: var(--input_hover);
+}
+
+.input_container,
+#input_submit {
+    height: 60px;
+    /* make the borders more round */
+    border-radius: 30px;
+    width: 100%;
+}
+
+.input_field {
+    /* customize the input tag with lighter font and some padding*/
+    color: var(--icon_color);
+    background-color: inherit;
+    width: 90%;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding-left: 30px;
+}
+
+.input_field:hover,
+.input_field:focus {
+    /* remove the outline */
+    outline: none;
+}
+
+#input_submit {
+    /* submit button has a different color and different padding */
+    background-color: var(--submit_bg);
+    padding-left: 0;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+#input_submit:hover {
+    background-color: var(--submit_hover);
+    /* simple color transition on hover */
+    transition: background-color,
+        1s;
+    cursor: pointer;
+}
+
+h1,
+span {
+    text-align: center;
+}
+
+/* shift it a bit lower */
+#create_account {
+    display: block;
+    position: relative;
+    top: 30px;
+}
+
+a {
+    /* remove default underline */
+    text-decoration: none;
+    color: var(--submit_bg);
+    font-weight: bold;
+}
+
+a:hover {
+    color: var(--submit_hover);
+}
+
+i {
+    color: var(--icon_color);
+}
+
+#input_submit {
+    /* outros estilos do seu botão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    /* Ajuste o padding conforme necessário */
+}
+
+#login_icon {
+    width: 25px;
+    /* aumentando o tamanho do ícone */
+    height: 25px;
+    /* aumentando o tamanho do ícone */
+    margin-left: 10px;
+    /* espaço entre o texto e o ícone */
+}
+
+#logo-imagem1 {
+    width: 40px;
+    /* Ou qualquer outro tamanho que você desejar */
+    height: auto;
+    /* Mantém a proporção da imagem */
+    position: absolute;
+    top: 10px;
+    /* Ajuste conforme necessário */
+    left: 10px;
+    /* Ajuste conforme necessário */
+}
+
+.input_container {
+    background-color: var(--input_bg);
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    position: relative;
+    /* Adicionado para o posicionamento absoluto do ícone do olho */
+}
+
+.eye_icon {
+    position: absolute;
+    right: 15px;
+    /* Ajustado para que o ícone não fique muito à direita */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+    /* Garante que o ícone fique em cima de outros elementos */
+}
+
+@media screen and (max-width:768px) {
+
+    /* make the layout  a single column and add some margin to the wrapper */
+    #form_wrapper {
+        grid-template-columns: 1fr;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* on small screen we don't display the image */
+    #form_left {
+        display: none;
+    }
+
+    #logo-imagem1 {
+        display: none;
+    }
+}

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Login</title>
+    <link href="{% static 'style/login.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+</head>
+
+<body>
+
+    <img src="{% static 'imagens/logo.png' %}" alt="Logo" id="logo-imagem1">
+
+    <div id="form_wrapper">
+        <div id="form_left">
+            <img src="{% static 'imagens/personagem.png' %}" alt="computer icon">
+        </div>
+        <form method="post" action="">
+            <div id="form_right">
+                {% csrf_token %}
+                <h1>Login</h1>
+                <div class="input_container">
+                    <i class="fas fa-user"></i>
+                    <input placeholder="Nome de Usuário" type="text" name="{{ form.username.name }}" id="field_username"
+                        class='input_field' value="{{ form.username.value|default_if_none:'' }}">
+                    {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="input_container password_container">
+                    <i class="fas fa-lock"></i>
+                    <input placeholder="Senha" type="password" name="{{ form.password.name }}" id="field_password"
+                        class='input_field' value="{{ form.password.value|default_if_none:'' }}">
+                    <span id="togglePassword" class="eye_icon"><i class="fas fa-eye" id="togglePasswordIcon"></i></span>
+                    {% if form.password.errors %}
+                    <div class="error">{{ form.password.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" id='input_submit' class='input_field'>
+                    LOGIN <img src="{% static 'imagens/logo.png' %}" id="login_icon">
+                </button>
+                <span>Esqueceu <a href="{% url 'password_reset' %}">Usuário / Senha?</a></span>
+                <span id='create_account'>
+                    <a href="{% url 'signup' %}">Registre-se ➡ </a>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'js/login.js' %}" defer></script>
+</body>
+
+</html>
+
+
+
+<!--
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Login</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+</head>
+
+<body>
+
+    <img src="imagens/logo.png" alt="Logo" id="logo-imagem1">
+
+    <div id="form_wrapper">
+        <div id="form_left">
+            <img src="imagens/personagem.png" alt="computer icon">
+        </div>
+        <div id="form_right">
+            <h1>Login</h1>
+            <div class="input_container">
+                <i class="fas fa-user"></i>
+                <input placeholder="Nome de Usuário" type="text" name="Username" id="field_username"
+                    class='input_field'>
+            </div>
+            <div class="input_container password_container">
+                <i class="fas fa-lock"></i>
+                <input placeholder="Senha" type="password" name="Password" id="field_password" class='input_field'>
+                <span id="togglePassword" class="eye_icon"><i class="fas fa-eye"></i></span>
+            </div>
+            <button type="submit" id='input_submit' class='input_field'>
+                LOGIN <img src="imagens/logo.png" id="login_icon">
+            </button>
+            <span>Esqueceu <a href="recover.html">Usuário / Senha?</a></span>
+            <span id='create_account'>
+                <a href="register.html">Registre-se ➡ </a>
+            </span>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
+
+-->

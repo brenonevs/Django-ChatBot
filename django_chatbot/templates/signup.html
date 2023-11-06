@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Faça seu Login</title>
+    <link href="{% static 'style/register.css' %}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+</head>
+
+<body>
+
+    <img src="{% static 'imagens/logo.png' %}" alt="Logo" id="logo-imagem1">
+
+    <div id="form_wrapper">
+        <form method="post">
+            {% csrf_token %}
+            <div id="form_right">
+                <h1>Registro</h1>
+                <div class="input_container">
+                    <i class="fas fa-user"></i>
+                    <input placeholder="Crie seu Usuário..." type="text" name="{{ form.username.name }}"
+                        id="field_username" class='input_field' value="{{ form.username.value|default_if_none:'' }}">
+                    {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+                <div class="input_container">
+                    <i class="fas fa-envelope"></i>
+                    <input placeholder="Digite seu Email..." type="email" name="{{ form.email.name }}" id="field_email"
+                        class='input_field' value="{{ form.email.value|default_if_none:'' }}">
+                    {% if form.email.errors %}
+                    <div class="error">{{ form.email.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+                <div class="input_container">
+                    <i class="fas fa-lock"></i>
+                    <input placeholder="Crie uma senha..." type="password" name="{{ form.password1.name }}"
+                        id="field_password1" class='input_field' value="{{ form.password1.value|default_if_none:'' }}">
+                    <span id="togglePassword" class="eye_icon"><i class="fas fa-eye"></i></span>
+                    {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+                <div class="input_container">
+                    <i class="fas fa-lock"></i>
+                    <input placeholder="Digite a senha novamente..." type="password" name="{{ form.password2.name }}"
+                        id="field_password2" class='input_field' value="{{ form.password2.value|default_if_none:'' }}">
+                    {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors.as_text }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" id='input_submit' class='input_field'>
+                    CRIAR CONTA <img src="{% static 'imagens/logo.png' %}" id="login_icon">
+                </button>
+                <span id='create_account'>
+                    <a href="{% url 'login' %}">⬅ Voltar</a>
+                </span>
+            </div>
+        </form>
+        <div id="form_left">
+            <img src="{% static 'imagens/personagem_registro.jpg' %}" alt="computer icon">
+        </div>
+    </div>
+
+    <script src="{% static 'js/signup.js' %}" defer></script>
+
+</body>
+
+</html>

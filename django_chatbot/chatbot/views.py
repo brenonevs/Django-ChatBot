@@ -1,4 +1,6 @@
+from urllib.parse import urlencode
 from django.shortcuts import render
+from django.contrib.auth import login
 from django.http import JsonResponse
 from django.views import View
 from django.shortcuts import get_object_or_404
@@ -14,8 +16,39 @@ from langchain.prompts import (
 from decouple import config
 from .models import Character, UserMessage, CharacterMessage, Conversation
 import logging
+from django.urls import reverse
+from django.views import generic
+from .forms import SignUpForm
 
 logger = logging.getLogger(__name__)
+
+
+class SignUp(generic.CreateView):
+    form_class = SignUpForm
+    template_name = "signup.html"
+
+    def form_valid(self, form):
+        # Save the new user first
+        user = form.save()
+        # Then log the user in
+        login(self.request, user)
+        return super(SignUp, self).form_valid(form)
+
+    def get_success_url(self):
+        # Construct your base URL with reverse
+        url = reverse("chatbot")
+
+        # grab Doutrinator id
+        doutrinator_id = Character.objects.get(name="Doutrinator").id
+
+        # Prepare your query parameters as a dictionary
+        query_params = {"character_id": doutrinator_id}
+
+        # Encode the parameters into a query string
+        query_string = urlencode(query_params)
+
+        # Return the complete URL by concatenating the base URL and the encoded query string
+        return f"{url}?{query_string}"
 
 
 class ChatbotView(View):
