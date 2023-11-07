@@ -167,3 +167,5 @@ LOGGING = {
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_REDIRECT_URL = "chatbot"
+
+LOGIN_URL = "login"

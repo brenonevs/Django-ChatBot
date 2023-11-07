@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Recuperar Acesso</title>
+    <link href="{% static 'style/recover.css' %}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+</head>
+
+<body>
+
+    <img src="{% static 'imagens/logo.png' %}" alt="Logo" id="logo-imagem1">
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <div id="form_wrapper">
+
+            <div id="form_right">
+                <h1>Esqueceu Usuário/Senha?</h1>
+                <div class="input_container">
+                    <i class="fas fa-envelope"></i>
+                    <input placeholder="Digite seu Email..." type="email" name="{{ form.email.name }}" id="field_email"
+                        class='input_field'>
+                </div>
+                <button type="submit" id='input_submit' class='input_field'>
+                    RECUPERAR ACESSO
+                </button>
+                <span id='back_to_login'>
+                    <a href="{% url 'login' %}">⬅ Voltar</a>
+                </span>
+            </div>
+            <div id="form_left">
+                <img src="{% static 'imagens/logo.png' %}" alt="Logo">
+            </div>
+
+        </div>
+    </form>
+</body>
+
+</html>

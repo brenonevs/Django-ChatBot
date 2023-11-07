@@ -69,7 +69,7 @@ class ChatSeleniumTestCase(StaticLiveServerTestCase):
         self.assertEqual(len(messages_list), 3)
 
 
-class SignupSeleniumTestCase(StaticLiveServerTestCase):
+class UserAuthenticationTestCase(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
@@ -142,3 +142,47 @@ class SignupSeleniumTestCase(StaticLiveServerTestCase):
 
         # Optionally, check that the sessionid cookie is not empty
         self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore
+
+    def test_login_process(self):
+        # Open the login page
+        self.driver.get(self.live_server_url + reverse("login"))
+
+        # Wait for the login form to load
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "field_username"))
+        )
+
+        # Find the login form inputs
+        username_input = self.driver.find_element(By.ID, "field_username")
+        password_input = self.driver.find_element(By.ID, "field_password")
+        login_button = self.driver.find_element(By.ID, "input_submit")
+
+        # Fill out the form
+        username_input.send_keys("testuser")
+        password_input.send_keys("mypassword")
+
+        # Submit the form
+        login_button.click()
+
+        # TODO check that has been redirected to the correct url
+
+        # Check if the user is logged in through cookie
+        cookies = self.driver.get_cookies()
+        session_cookie = next(
+            (cookie for cookie in cookies if cookie["name"] == "sessionid"), None
+        )
+
+        # Check that the sessionid cookie is present
+        self.assertIsNotNone(session_cookie, "Session cookie should be set after login")
+
+        # Optionally, check that the sessionid cookie is not empty
+        self.assertNotEqual(
+            session_cookie["value"], "", "Session cookie should not be empty"
+        )
+
+        # Verify that the user is the one who is logged in
+        self.assertEqual(self.user.username, "testuser")
+
+    def test_password_recovery_process(self):
+        # Test the password recovery process
+        pass
