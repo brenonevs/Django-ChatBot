@@ -88,6 +88,11 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
             prompt="Você é Doutrinator, um político especialista capaz de identificar a ideologia de qualquer pessoa a partir do que ela diz. Após a primeira frase dela, você deve dizer sua ideologia política.",
             chat_model_name="gpt-3.5-turbo-0613",
         )
+        self.user = User.objects.create_user(
+            username="testuser1",
+            email="test@test.com",
+            password="myhardveryhardpassword",
+        )
 
     def test_signup(self):
         # Open the signup page
@@ -106,7 +111,7 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         signup_button = self.driver.find_element(By.ID, "input_submit")
 
         # Fill out the form
-        username_input.send_keys("testuser")
+        username_input.send_keys("testuser2")
         email_input.send_keys("testuser@example.com")
         password1_input.send_keys("myhardveryhardpassword")
         password2_input.send_keys("myhardveryhardpassword")
@@ -122,13 +127,12 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         )
 
         # verify that the user was created in the database and that it is logged in
-        self.assertEqual(User.objects.count(), 1)
         try:
-            user = User.objects.get(username="testuser")
+            user = User.objects.get(username="testuser2")
         except User.DoesNotExist:
             self.fail("User was not created.")
 
-        self.assertEqual(user.username, "testuser")  # type: ignore
+        self.assertEqual(user.username, "testuser2")  # type: ignore
 
         # Check if the user is logged in through cookie. watchout because there are other cookies
         # in the page
@@ -158,8 +162,8 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         login_button = self.driver.find_element(By.ID, "input_submit")
 
         # Fill out the form
-        username_input.send_keys("testuser")
-        password_input.send_keys("mypassword")
+        username_input.send_keys("testuser1")
+        password_input.send_keys("myhardveryhardpassword")
 
         # Submit the form
         login_button.click()
@@ -168,6 +172,7 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
 
         # Check if the user is logged in through cookie
         cookies = self.driver.get_cookies()
+        print(cookies)
         session_cookie = next(
             (cookie for cookie in cookies if cookie["name"] == "sessionid"), None
         )
@@ -176,12 +181,15 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         self.assertIsNotNone(session_cookie, "Session cookie should be set after login")
 
         # Optionally, check that the sessionid cookie is not empty
-        self.assertNotEqual(
-            session_cookie["value"], "", "Session cookie should not be empty"
-        )
+        self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore
 
         # Verify that the user is the one who is logged in
-        self.assertEqual(self.user.username, "testuser")
+        try:
+            self.user = User.objects.get(username="testuser1")
+        except User.DoesNotExist:
+            self.fail("User was not created.")
+
+        self.assertEqual(self.user.username, "testuser1")
 
     def test_password_recovery_process(self):
         # Test the password recovery process
