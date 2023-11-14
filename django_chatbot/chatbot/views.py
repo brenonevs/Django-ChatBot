@@ -27,19 +27,19 @@ class SignUp(generic.CreateView):
     form_class = SignUpForm
     template_name = "signup.html"
 
-    async def form_valid(self, form):
+    def form_valid(self, form):
         # Save the new user first
         user = form.save()
         # Then log the user in
         login(self.request, user)
         return super(SignUp, self).form_valid(form)
 
-    async def get_success_url(self):
+    def get_success_url(self):
         # Construct your base URL with reverse
         url = reverse("chatbot")
 
         # grab Doutrinator id
-        doutrinator_id = await Character.objects.aget(name="Doutrinator").id
+        doutrinator_id = Character.objects.get(name="Doutrinator").id
 
         # Prepare your query parameters as a dictionary
         query_params = {"character_id": doutrinator_id}

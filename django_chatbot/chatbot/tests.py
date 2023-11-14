@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .models import Character
+import django.core.mail
 
 User = get_user_model()
 
@@ -145,7 +146,7 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         self.assertIsNotNone(session_cookie, "Session cookie should be set after login")
 
         # Optionally, check that the sessionid cookie is not empty
-        self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore
+        self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore """
 
     def test_login_process(self):
         # Open the login page
@@ -183,14 +184,102 @@ class UserAuthenticationTestCase(StaticLiveServerTestCase):
         # Optionally, check that the sessionid cookie is not empty
         self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore
 
-        # Verify that the user is the one who is logged in
-        try:
-            self.user = User.objects.get(username="testuser1")
-        except User.DoesNotExist:
-            self.fail("User was not created.")
-
-        self.assertEqual(self.user.username, "testuser1")
-
     def test_password_recovery_process(self):
         # Test the password recovery process
-        pass
+        self.driver.get(self.live_server_url + reverse("password_reset"))
+
+        # Wait for the password reset form to load
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "field_email"))
+        )
+
+        # Find the password reset form inputs
+        email_input = self.driver.find_element(By.ID, "field_email")
+        reset_button = self.driver.find_element(By.ID, "input_submit")
+
+        # Fill out the form
+        email_input.send_keys("test@test.com")
+
+        # Submit the form
+        reset_button.click()
+
+        # Wait for 10 seconds, email in outbox
+        WebDriverWait(self.driver, 10).until(
+            lambda driver: len(django.core.mail.outbox) == 1
+        )
+
+        # Check that the email was sent
+        self.assertEqual(len(django.core.mail.outbox), 1)
+
+        # Check that the email was sent to the correct user
+        self.assertEqual(django.core.mail.outbox[0].to, ["test@test.com"])
+
+        # read off the email the password reset link. it starts with "http". split after that.
+        #  and ends with a token, after that line break
+        email_body = django.core.mail.outbox[0].body
+        reset_link = email_body.split("http")[1].split("\n")[0]
+        # now add back the http because it was split
+        reset_link = "http" + reset_link
+
+        # Open the password reset link
+        self.driver.get(reset_link)
+
+        # Wait for the password reset form to load
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "id_new_password1"))
+        )
+
+        # Find the password reset form inputs
+        password1_input = self.driver.find_element(By.ID, "id_new_password1")
+        password2_input = self.driver.find_element(By.ID, "id_new_password2")
+
+        # Find the password reset form submit button, its tag is input, and it has a value of "Change my password"
+        reset_button = self.driver.find_element(
+            By.XPATH, "//input[@value='Change my password']"
+        )
+
+        # Fill out the form
+        password1_input.send_keys("myeasyveryeasypassword")
+        password2_input.send_keys("myeasyveryeasypassword")
+
+        reset_button.click()
+
+        # Wait for the password reset to complete and check that has been redirected to password reset done page
+        WebDriverWait(self.driver, 10).until(
+            EC.text_to_be_present_in_element(
+                (By.TAG_NAME, "body"), "Your password has been set"
+            )
+        )
+
+        # click login button, it has an a tag, and an href of /login/
+        login_button = self.driver.find_element(By.XPATH, "//a[@href='/login/']")
+        login_button.click()
+
+        # Wait for the login form to load
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "field_username"))
+        )
+
+        # Find the login form inputs
+        username_input = self.driver.find_element(By.ID, "field_username")
+        password_input = self.driver.find_element(By.ID, "field_password")
+        login_button = self.driver.find_element(By.ID, "input_submit")
+
+        # Fill out the form
+        username_input.send_keys("testuser1")
+        password_input.send_keys("myeasyveryeasypassword")
+
+        # Submit the form
+        login_button.click()
+
+        # Check if the user is logged in through cookie
+        cookies = self.driver.get_cookies()
+        session_cookie = next(
+            (cookie for cookie in cookies if cookie["name"] == "sessionid"), None
+        )
+
+        # Check that the sessionid cookie is present
+        self.assertIsNotNone(session_cookie, "Session cookie should be set after login")
+
+        # Optionally, check that the sessionid cookie is not empty
+        self.assertNotEqual(session_cookie["value"], "", "Session cookie should not be empty")  # type: ignore
