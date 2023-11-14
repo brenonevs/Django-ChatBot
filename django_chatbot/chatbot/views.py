@@ -27,19 +27,19 @@ class SignUp(generic.CreateView):
     form_class = SignUpForm
     template_name = "signup.html"
 
-    def form_valid(self, form):
+    async def form_valid(self, form):
         # Save the new user first
         user = form.save()
         # Then log the user in
         login(self.request, user)
         return super(SignUp, self).form_valid(form)
 
-    def get_success_url(self):
+    async def get_success_url(self):
         # Construct your base URL with reverse
         url = reverse("chatbot")
 
         # grab Doutrinator id
-        doutrinator_id = Character.objects.get(name="Doutrinator").id
+        doutrinator_id = await Character.objects.aget(name="Doutrinator").id
 
         # Prepare your query parameters as a dictionary
         query_params = {"character_id": doutrinator_id}
@@ -54,13 +54,12 @@ class SignUp(generic.CreateView):
 class ChatbotView(View):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-
         character_id = request.GET.get("character_id")
 
         try:
-            self.character = get_object_or_404(Character, id=character_id)
+            self.character = Character.objects.get(id=character_id)
         except Exception:
-            self.character = get_object_or_404(Character, name="Doutrinator")
+            self.character = Character.objects.get(name="Doutrinator")
 
         self.chat_model = ChatOpenAI(
             openai_api_key=str(config("OPENAI_API_KEY")),
@@ -125,6 +124,8 @@ class ChatbotView(View):
 
 
 class HomeView(View):
-    def get(self, request):
-        context = {"characters": Character.objects.all()}
+    async def get(self, request):
+        # context should be filled with characters, but asynchronously
+        characters = [character async for character in Character.objects.all()]
+        context = {"characters": characters}
         return render(request, "index.html", context=context)
