@@ -3,22 +3,13 @@ from django.shortcuts import render
 from django.contrib.auth import login
 from django.http import JsonResponse
 from django.views import View
-from django.shortcuts import get_object_or_404
-from langchain.chains.conversation.memory import ConversationBufferMemory
-from langchain.chains import ConversationChain
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import (
-    SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
-    MessagesPlaceholder,
-    ChatPromptTemplate,
-)
 from decouple import config
 from .models import Character, UserMessage, CharacterMessage, Conversation
 import logging
 from django.urls import reverse
 from django.views import generic
 from .forms import SignUpForm
+from chatbot.chatbot import Chatbot
 
 logger = logging.getLogger(__name__)
 
@@ -58,66 +49,52 @@ class ChatbotView(View):
 
         try:
             self.character = Character.objects.get(id=character_id)
-        except Exception:
+        except Character.DoesNotExist:
             self.character = Character.objects.get(name="Doutrinator")
 
-        self.chat_model = ChatOpenAI(
-            openai_api_key=str(config("OPENAI_API_KEY")),
-            model=self.character.chat_model_name,
-            temperature=0,
-            max_tokens=1024,
-        )
-        self.system_message_template = SystemMessagePromptTemplate.from_template(
-            self.character.prompt
-        )
-        self.message_placeholder = MessagesPlaceholder(variable_name="chat_history")
-        self.human_message_template = HumanMessagePromptTemplate.from_template(
-            "{input}"
-        )
+        # Check if there's an existing conversation ID in the session
+        conversation_id = request.session.get("conversation_id")
+        if conversation_id:
+            try:
+                self.conversation = Conversation.objects.get(id=conversation_id)
+            except Conversation.DoesNotExist:
+                self.conversation = self._create_new_conversation()
+        else:
+            self.conversation = self._create_new_conversation()
 
-        self.prompt = ChatPromptTemplate(
-            input_variables=["input", "chat_history"],
-            messages=[
-                self.system_message_template,
-                self.message_placeholder,
-                self.human_message_template,
-            ],
-        )
+        self.chatbot = Chatbot(self.conversation)
 
-        self.memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True,
-        )
+    def _create_new_conversation(self):
+        conversation = Conversation.objects.create(character=self.character)
+        # Store the conversation ID in the session
+        self.request.session["conversation_id"] = conversation.id
+        return conversation
 
-        self.conversation_chain = ConversationChain(
-            llm=self.chat_model,
-            prompt=self.prompt,
-            verbose=True,
-            memory=self.memory,
-        )
-
-        self.conversation = Conversation.objects.create(character=self.character)
-
-    def _process_message(self, message):
-        logger.info(f"Sending message to chatbot: {message}")
-        return self.conversation_chain.run(input=message)
+    def _process_message(self):
+        logger.info(f"Getting chatbot response.")
+        return self.chatbot.get_chatbot_response()
 
     def get(self, request):
         return render(request, "chatbot.html", {"character": self.character})
 
     def post(self, request):
-        """Handle POST requests and return the response from OpenAI."""
         logger.info(f"POST request to ChatbotView: {request.POST}")
         message = request.POST.get("message")
         if not message:
             logger.warning("POST request was made to ChatbotView without message")
             return JsonResponse({"error": "Message is required"}, status=400)
 
-        UserMessage.objects.create(content=message)
+        # Create a UserMessage regardless of whether the user is authenticated
+        sender = request.user if request.user.is_authenticated else None
+        UserMessage.objects.create(
+            content=message, sender=sender, conversation=self.conversation
+        )
 
-        response = self._process_message(message)
+        response = self._process_message()
 
-        CharacterMessage.objects.create(sender=self.character, content=response)
+        CharacterMessage.objects.create(
+            sender=self.character, content=response, conversation=self.conversation
+        )
 
         logger.info(f"Chatbot response: {response}")
         return JsonResponse({"message": message, "response": response})

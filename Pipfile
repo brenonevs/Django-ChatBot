@@ -30,7 +30,6 @@ multidict = "==6.0.4"
 mypy-extensions = "==1.0.0"
 numexpr = "==2.8.7"
 numpy = "==1.26.0"
-openai = "==0.28.1"
 outcome = "==1.2.0"
 packaging = "==23.1"
 pycparser = "==2.21"
@@ -56,6 +55,7 @@ urllib3 = "==2.0.5"
 wsproto = "==1.2.0"
 yarl = "==1.9.2"
 python-decouple = "*"
+openai = "*"
 
 [dev-packages]
 

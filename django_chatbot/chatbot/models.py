@@ -34,9 +34,6 @@ class Message(models.Model):
     def __str__(self):
         return self.content
 
-    class Meta:
-        abstract = True
-
 
 class UserMessage(Message):
     sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
