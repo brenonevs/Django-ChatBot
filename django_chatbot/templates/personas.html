@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Imagens</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'imagens/backgroundimage.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .image-container {
+            text-align: center;
+            background-color: transparent;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            flex-basis: 30%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        .image-container button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px 0;
+            border: none;
+            border-radius: 20px;
+            background-color: #000000; /* Botão preto */
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .image-container button:hover {
+            background-color: #808080; /* Botão cinza ao passar o mouse */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="{% static 'imagens/BolsonaroBlackWhite.png' %}" alt="Bolsonaro">
+            <button onclick="window.location.href='http://url1.com';">Jair Messias Bolsonaro</button>
+        </div>
+
+        <div class="image-container">
+            <img src="{% static 'imagens/LulaBlackWhite.jpg' %}" alt="Lula">
+            <button onclick="window.location.href='http://url2.com';">Luiz Inácio Lula da Silva</button>
+        </div>
+
+        <div class="image-container">
+            <img src="{% static 'imagens/GetulioBlackWhite.jpg' %}" alt="Getúlio Vargas">
+            <button onclick="window.location.href='http://url3.com';">Getúlio Vargas</button>
+        </div>
+    </div>
+</body>
+</html>

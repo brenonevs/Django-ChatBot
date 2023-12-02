@@ -10,12 +10,27 @@
     <link rel="stylesheet" href="{% static 'style/home.css' %}">
     <style>
         .hero-section {
-            background: url('{% static "imagens/fundo_doutrinator.webp" %}');
+            background: url('{% static "imagens/banner7.png" %}');
+            background-size: cover;
+            background-position: center;
+            min-height: 1000px; 
         }
+        .slogan-text {
+        font-family: 'Arial', sans-serif; /* Escolha a fonte que preferir */
+        font-size: 24px; /* Tamanho da fonte */
+        font-weight: bold; /* Peso da fonte */
+        color: whitesmoke; /* Cor da fonte, escolha a cor que desejar */
+        text-shadow: 2px 2px 4px #000000; /* Sombra do texto para destacá-lo */
+        }
+        .hero-logo {
+        width: 500px; /* Aumente o tamanho conforme necessário */
+        height: auto; /* Isso garante que a imagem mantenha sua proporção */
+        }
+
     </style>
 </head>
 
-<body>
+<body>  
     <header>
         <nav class="navbar">
             <div class="navbar-icon">
@@ -38,8 +53,8 @@
 
     <div class="hero-section">
         <div class="hero-content">
-            <img src="{% static 'imagens/doutrinator_final.png' %}" alt="DOUTRINATOR" class="hero-logo">
-            <p style="text-align: center;">Um novo jeito de viver a política.</p>
+            <img src="{% static 'imagens/doutrinator.png' %}" alt="DOUTRINATOR" class="hero-logo" style="width: 500px; height: auto;">
+            <p class="slogan-text" style="text-align: center;">Um novo jeito de viver a política.</p>
         </div>
     </div>
 
@@ -47,12 +62,12 @@
         <h1 class="centered-text">PREPARE-SE PARA UMA AVENTURA</h1>
         <div class="black-rectangle">
             <div class="profile">
-                <img src="{% static 'imagens/personagem.png' %}" alt="Perfil 1" class="profile-image">
+                <img src="{% static 'imagens/BolsonaroBlackWhite.png' %}" alt="Perfil 1" class="profile-image">
                 <p class="profile-text">Bolsonaro</p>
             </div>
-            <a href="{% url 'chatbot' %}" class="main-button">COMEÇAR</a>
+            <a href="{% url 'personas' %}" class="main-button">COMEÇAR</a>
             <div class="profile">
-                <img src="{% static 'imagens/personagem_registro.jpg' %}" alt="Perfil 2" class="profile-image">
+                <img src="{% static 'imagens/LulaBlackWhite.jpg' %}" alt="Perfil 2" class="profile-image">
                 <p class="profile-text">Lula</p>
             </div>
         </div>

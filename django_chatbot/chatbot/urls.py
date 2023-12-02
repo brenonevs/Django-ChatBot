@@ -32,4 +32,5 @@ urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("chatbot/", views.ChatbotView.as_view(), name="chatbot"),
     path("about/", views.AboutView.as_view(), name="about"),
+    path("personas/", views.PersonasView.as_view(), name="personas")
 ]
