@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doutrinator Homepage</title>
+    <link rel="stylesheet" href="{% static 'style/home.css' %}">
+    <style>
+        .hero-section {
+            background: url('{% static "imagens/fundo_doutrinator.webp" %}');
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-icon">
+                <img src="{% static 'imagens/logo_branca.png' %}" alt="Ícone Descrição" />
+            </div>
+            <div class="container">
+                <div class="navbar-brand">Doutrinator</div>
+                <div class="navbar-menu">
+                    <a href="{% url 'home' %}" class="navbar-item">Home</a>
+                    <a href="#" class="navbar-item">Features</a>
+                    <a href="{% url 'about' %}" class="navbar-item">About</a>
+                    <a href="{% url 'login' %}" class="login-item">
+                        <i class="fa fa-sign-in login-icon"></i> <!-- Ícone de login do FontAwesome -->
+                        Login
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <img src="{% static 'imagens/doutrinator_final.png' %}" alt="DOUTRINATOR" class="hero-logo">
+            <p style="text-align: center;">Um novo jeito de viver a política.</p>
+        </div>
+    </div>
+
+    <div class="section-below-hero">
+        <h1 class="centered-text">PREPARE-SE PARA UMA AVENTURA</h1>
+        <div class="black-rectangle">
+            <div class="profile">
+                <img src="{% static 'imagens/personagem.png' %}" alt="Perfil 1" class="profile-image">
+                <p class="profile-text">Bolsonaro</p>
+            </div>
+            <a href="{% url 'chatbot' %}" class="main-button">COMEÇAR</a>
+            <div class="profile">
+                <img src="{% static 'imagens/personagem_registro.jpg' %}" alt="Perfil 2" class="profile-image">
+                <p class="profile-text">Lula</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-below-black-rectangle">
+        <p class="additional-text">No vasto cenário tecnológico, onde a política e a interação humana estão
+            constantemente evoluindo, emerge um projeto audacioso que promete revolucionar a forma como discutimos
+            política. Utilizando a poderosa combinação de Django, um popular framework web em Python, e a API do
+            ChatGPT, este projeto visa criar um bot capaz de envolver-se em debates políticos de maneira inteligente e
+            informativa.</p>
+    </div>
+
+    <script>
+
+        // Função para fixar a navbar no topo com fundo preto após o usuário rolar para baixo
+        window.onscroll = function () {
+            var navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 0) {
+                navbar.style.top = '0';
+                navbar.style.backgroundColor = '#000'; // Assegura que o fundo preto apareça
+            } else {
+                navbar.style.top = '0'; // Mantém a navbar no topo mesmo quando o usuário está no topo da página
+                // Opcional: se quiser que a navbar fique transparente quando no topo, descomente a próxima linha
+                // navbar.style.backgroundColor = 'transparent'; 
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>

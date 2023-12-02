@@ -1,15 +1,15 @@
 from urllib.parse import urlencode
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.http import JsonResponse
 from django.views import View
-from decouple import config
 from .models import Character, UserMessage, CharacterMessage, Conversation
 import logging
 from django.urls import reverse
 from django.views import generic
 from .forms import SignUpForm
 from chatbot.chatbot import Chatbot
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class SignUp(generic.CreateView):
         user = form.save()
         # Then log the user in
         login(self.request, user)
-        return super(SignUp, self).form_valid(form)
+        return redirect(self.get_success_url())
 
     def get_success_url(self):
         # Construct your base URL with reverse
@@ -42,7 +42,7 @@ class SignUp(generic.CreateView):
         return f"{url}?{query_string}"
 
 
-class ChatbotView(View):
+class ChatbotView(LoginRequiredMixin, View):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         character_id = request.GET.get("character_id")
@@ -105,4 +105,9 @@ class HomeView(View):
         # context should be filled with characters, but asynchronously
         characters = [character async for character in Character.objects.all()]
         context = {"characters": characters}
-        return render(request, "index.html", context=context)
+        return render(request, "home.html", context=context)
+
+
+class AboutView(View):
+    def get(self, request):
+        return render(request, "about.html")

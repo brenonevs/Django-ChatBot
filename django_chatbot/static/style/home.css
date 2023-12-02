@@ -1,0 +1,299 @@
+/* Reseta as margens e paddings para evitar espaços indesejados padrão do navegador */
+body,
+h1,
+a {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Remove as margens adicionais que podem estar causando a barra preta */
+* {
+    box-sizing: border-box;
+    /* Faz com que padding e border sejam incluídos na largura total e altura dos elementos */
+}
+
+
+/* Estiliza o cabeçalho */
+header {
+    z-index: 10;
+    /* Garante que a navbar fique acima da hero-section */
+    position: relative;
+    /* Necessário para o z-index funcionar */
+    background-color: #000;
+    /* Fundo preto para a navbar */
+    color: white;
+    padding: 10px 0;
+}
+
+/* Estiliza a navbar */
+.navbar {
+    display: flex;
+    padding: 5px 2%;
+    /* Ajusta o padding para alinhar com o design */
+    justify-content: space-between;
+    /* Isso garantirá que o ícone fique à esquerda e o menu à direita */
+    align-items: center;
+    /* Isso alinha verticalmente os itens da navbar */
+}
+
+/* Estiliza a navbar para ser fixa no topo após o scroll */
+.navbar {
+    position: fixed;
+    /* Muda para fixo */
+    top: 0;
+    /* Fixa a navbar no topo */
+    left: 0;
+    /* Alinha a navbar à esquerda */
+    right: 0;
+    /* Estende a navbar até a direita */
+    transition: top 0.3s;
+    /* Suaviza a transição do topo */
+    z-index: 1000;
+    /* Garante que a navbar fique acima dos outros elementos */
+}
+
+.navbar-icon img {
+    height: 45px;
+    /* Altura do ícone, ajuste conforme necessário */
+    width: auto;
+    /* A largura será ajustada proporcionalmente */
+    /* Você pode querer adicionar margem à direita se o ícone estiver muito próximo do menu */
+    margin-right: 10px;
+}
+
+/* Estiliza o contêiner dentro da barra de navegação */
+.container {
+    flex-grow: 1;
+    /* Permite que o contêiner cresça para ocupar todo o espaço disponível */
+    display: flex;
+    /* Aplica flexbox */
+    justify-content: flex-end;
+    /* Alinha os itens à direita dentro do contêiner */
+}
+
+/* Esconde o nome da marca pois não será utilizado */
+.navbar-brand {
+    display: none;
+}
+
+/* Assegura que todos os itens do menu da navbar estejam alinhados verticalmente */
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    /* Alinhamento vertical */
+    justify-content: flex-end;
+    /* Alinha os itens à direita */
+    gap: 30px;
+    /* Espaço entre os itens do menu */
+    padding-right: 30px;
+    /* Espaço à direita */
+    height: 100%;
+    /* Altura total da navbar */
+}
+
+/* Estiliza cada item do menu */
+.navbar-item {
+    color: white;
+    /* Cor do texto dos itens do menu */
+    text-decoration: none;
+    /* Remove o sublinhado dos links */
+    font-size: 18px;
+    /* Define o tamanho da fonte dos itens do menu */
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/* Efeito de hover para cada item do menu */
+.navbar-item:hover {
+    text-decoration: underline;
+    /* Adiciona um sublinhado ao passar o mouse */
+}
+
+/* Estiliza o item de login para ter um fundo cinza e bordas arredondadas */
+.login-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    /* Ajuste no padding para aumentar o espaço ao redor do texto */
+    margin-left: 20px;
+    /* Espaço à esquerda para separar do item anterior */
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    /* Cor do texto */
+    font-size: 18px;
+    /* Tamanho da fonte */
+    background-color: #5c5c5c;
+    /* Fundo cinza */
+    border-radius: 22px;
+    /* Bordas arredondadas */
+    border: none;
+    /* Remove a borda */
+}
+
+/* Estiliza o ícone de login */
+.login-icon {
+    color: white;
+    /* Cor do texto do ícone de login */
+    text-align: center;
+    /* Alinha o texto do ícone de login horizontalmente */
+    line-height: 40px;
+    /* Centraliza o texto do ícone de login verticalmente */
+}
+
+/* Estiliza a seção hero */
+.hero-section {
+    position: relative;
+    /* Posição relativa para o posicionamento dos filhos */
+    background: url('BACKGROUND_IMAGE_URL') no-repeat center center;
+    background-size: cover;
+    height: 500px;
+    /* Ajusta a altura conforme necessário */
+    margin-top: -10px;
+    /* Remove a margem superior que pode estar causando a barra preta */
+}
+
+/* Estiliza o conteúdo da hero-section */
+.hero-content {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 20px;
+    background: none;
+    /* Remove o fundo preto */
+}
+
+/* Estiliza a logo dentro da seção hero */
+.hero-logo {
+    max-width: 100%;
+    /* Garante que a logo não ultrapasse a largura da tela */
+    height: auto;
+    /* Mantém a proporção da imagem */
+    margin-bottom: 0;
+    /* Espaço abaixo da logo */
+}
+
+
+/* Estiliza o título dentro da seção hero */
+.hero-section h1 {
+    font-size: 3em;
+    /* Tamanho grande para o título */
+    margin-bottom: 0.5em;
+    /* Espaço abaixo do título */
+}
+
+/* Estiliza o texto descritivo */
+.hero-section p {
+    font-size: 1.5em;
+    /* Tamanho do texto descritivo */
+    margin-bottom: 0;
+    /* Remove a margem inferior */
+}
+
+/* Estiliza a seção logo abaixo da imagem de herói */
+.section-below-hero {
+    text-align: center;
+    /* Centraliza o texto nesta seção */
+    padding: 20px 0;
+    /* Adiciona um padding vertical acima e abaixo do conteúdo da seção */
+}
+
+/* Estiliza o texto centralizado acima do retângulo preto */
+.centered-text {
+    font-size: 2em;
+    /* Aumenta o tamanho da fonte para o texto centralizado */
+    margin-bottom: 45px;
+    /* Adiciona espaço abaixo do texto antes do retângulo preto */
+    margin-top: 35px;
+}
+
+/* Estiliza o retângulo preto */
+.black-rectangle {
+    background-color: black;
+    /* Define a cor de fundo do retângulo para preto */
+    border-radius: 40px;
+    /* Arredonda as bordas do retângulo */
+    padding: 15px;
+    /* Adiciona padding dentro do retângulo para aumentar sua altura */
+    display: flex;
+    /* Utiliza flexbox para o layout dos itens dentro do retângulo */
+    justify-content: space-around;
+    /* Distribui o espaço igualmente em torno dos itens dentro do retângulo */
+    align-items: center;
+    /* Centraliza os itens verticalmente dentro do retângulo */
+    margin: 0 auto;
+    /* Centraliza o retângulo na página horizontalmente */
+    max-width: 40%;
+    /* Limita a largura máxima do retângulo a 80% da largura do container pai */
+}
+
+/* Estiliza as imagens de perfil dentro do retângulo preto */
+.profile-image {
+    border-radius: 50%;
+    /* Faz com que as imagens de perfil sejam circulares */
+    width: 100px;
+    /* Define a largura das imagens de perfil */
+    height: 100px;
+    /* Define a altura das imagens de perfil */
+    margin-bottom: 10px;
+    /* Adiciona espaço abaixo das imagens de perfil */
+}
+
+/* Estiliza o texto abaixo das imagens de perfil */
+.profile-text {
+    color: white;
+    /* Define a cor do texto para branco */
+    margin-bottom: 0;
+    /* Remove a margem inferior padrão */
+}
+
+/* Estiliza o botão que leva à página principal */
+.main-button {
+    background-color: #5c5c5c;
+    /* Define a cor de fundo do botão */
+    color: white;
+    /* Define a cor do texto do botão para branco */
+    padding: 30px 50px;
+    /* Adiciona padding para aumentar a altura do botão */
+    text-decoration: none;
+    /* Remove o sublinhado do texto do botão */
+    border-radius: 22px;
+    /* Arredonda as bordas do botão */
+    font-size: 18px;
+    /* Define o tamanho da fonte do texto do botão */
+    border: none;
+}
+
+.section-below-black-rectangle {
+    padding: 40px 0;
+    /* Adiciona um espaçamento acima e abaixo do texto */
+    text-align: center;
+    /* Centraliza o texto horizontalmente */
+}
+
+.additional-text {
+    font-size: 1.5em;
+    /* Ajusta o tamanho da fonte do texto */
+    color: #333;
+    /* Define a cor do texto, ajuste conforme necessário */
+    max-width: 40%;
+    /* Define a largura máxima do texto para manter a legibilidade */
+    margin: 0 auto;
+    /* Centraliza o bloco de texto na página */
+}
+
+/* Efeito de hover para o botão de LOGIN na navbar */
+.login-item:hover {
+    background-color: #707070;
+    /* Uma cor mais clara que o cinza original #5c5c5c */
+}
+
+/* Efeito de hover para o botão de levar à página principal */
+.main-button:hover {
+    background-color: #707070;
+    /* Uma cor mais clara que o cinza original #5c5c5c */
+}
