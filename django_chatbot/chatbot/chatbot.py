@@ -2,6 +2,7 @@
 from openai import OpenAI
 import logging
 from decouple import config
+import openai
 
 # Grouped imports from the same module
 from .models import Conversation, Message

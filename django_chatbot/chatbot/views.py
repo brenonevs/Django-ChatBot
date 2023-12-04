@@ -80,8 +80,9 @@ class ChatbotView(LoginRequiredMixin, View):
         if "conversation_id" in request.session:
             del request.session["conversation_id"]
 
-        return render(request, "chatbot.html", {"character": self.character})
-
+        character_id = request.GET.get("character_id")
+        return render(request, "chatbot.html", {"character": self.character, "character_id": character_id})
+    
     def post(self, request):
         logger.info(f"POST request to ChatbotView: {request.POST}")
         message = request.POST.get("message")
@@ -105,6 +106,7 @@ class ChatbotView(LoginRequiredMixin, View):
         return JsonResponse({"message": message, "response": response})
 
 
+
 class HomeView(View):
     async def get(self, request):
         # context should be filled with characters, but asynchronously
@@ -121,3 +123,7 @@ class AboutView(View):
 class PersonasView(View):
     def get(self, request):
         return render(request, "personas.html")
+    
+
+
+

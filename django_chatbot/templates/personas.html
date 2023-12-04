@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Página de Imagens</title>
     <style>
@@ -51,7 +50,6 @@
             border: none;
             border-radius: 20px;
             background-color: #000000;
-            /* Botão preto */
             color: white;
             cursor: pointer;
             font-size: 16px;
@@ -61,31 +59,114 @@
 
         .image-container button:hover {
             background-color: #808080;
-            /* Botão cinza ao passar o mouse */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .popup-content {
+            position: relative;
+            width: 500px; /* Defina a largura desejada */
+            height: 100px; /* Defina a altura desejada */
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px; /* Remova o border-radius para torná-lo quadrado */
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            border: none;
+            background: transparent;
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #close-btn:hover {
+            color: #ccc;
+        }
+
+        .popup-content p {
+            color: #ffffff;
+            font-family: 'Arial', Courier, monospace;
+        }
+
+        .popup-content button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #303130;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .popup-content button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="image-container">
             <img src="{% static 'imagens/BolsonaroBlackWhite.png' %}" alt="Bolsonaro">
-            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=2';">Jair Messias
-                Bolsonaro</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=1';">Jair Messias Bolsonaro</button>
         </div>
 
         <div class="image-container">
             <img src="{% static 'imagens/LulaBlackWhite.jpg' %}" alt="Lula">
-            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=3';">Luiz Inácio Lula da
-                Silva</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=2';">Luiz Inácio Lula da Silva</button>
         </div>
 
         <div class="image-container">
             <img src="{% static 'imagens/GetulioBlackWhite.jpg' %}" alt="Getúlio Vargas">
-            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=4';">Getúlio Vargas</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=3';">Getúlio Vargas</button>
         </div>
     </div>
-</body>
 
+    <!-- Pop-up -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button id="close-btn" onclick="closePopup()">X</button>
+            <p style="color: #000000;">Realize o cadastro para ter acesso às Personas ou converse com o Doutrinator</p>
+            <!-- Botão atualizado para redirecionar para um novo URL -->
+            <button onclick="window.location.href='{% url 'login' %}';">Login/Cadastro</button>
+        </div>
+    </div>
+
+    <!-- Pop-up -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button id="close-btn" onclick="closePopup()">X</button>
+            <p>Realize o cadastro para ter acesso às Personas</p>
+            <button onclick="window.location.href='{% url 'login' %}';">Login/Cadastro</button>
+        </div>
+    </div>
+
+    <script>
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Para mostrar o pop-up, você pode usar:
+        document.getElementById('popup').style.display = 'block';
+    </script>
+</body>
 </html>
