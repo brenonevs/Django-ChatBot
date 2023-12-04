@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 # Constants
 API_KEY = str(config("OPENAI_API_KEY"))
-print(API_KEY)
 CHAT_MODEL = "gpt-3.5-turbo"
 
 
