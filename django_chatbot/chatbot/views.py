@@ -50,6 +50,7 @@ class ChatbotView(LoginRequiredMixin, View):
         try:
             self.character = Character.objects.get(id=character_id)
         except Character.DoesNotExist:
+            print("dout fallback")
             self.character = Character.objects.get(name="Doutrinator")
 
         # Check if there's an existing conversation ID in the session
@@ -75,6 +76,10 @@ class ChatbotView(LoginRequiredMixin, View):
         return self.chatbot.get_chatbot_response()
 
     def get(self, request):
+        # purge the conversation_id from the session
+        if "conversation_id" in request.session:
+            del request.session["conversation_id"]
+
         return render(request, "chatbot.html", {"character": self.character})
 
     def post(self, request):
@@ -111,9 +116,8 @@ class HomeView(View):
 class AboutView(View):
     def get(self, request):
         return render(request, "about.html")
-    
+
 
 class PersonasView(View):
     def get(self, request):
         return render(request, "personas.html")
-

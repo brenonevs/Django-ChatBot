@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Página de Imagens</title>
     <style>
@@ -49,7 +50,8 @@
             padding: 12px 0;
             border: none;
             border-radius: 20px;
-            background-color: #000000; /* Botão preto */
+            background-color: #000000;
+            /* Botão preto */
             color: white;
             cursor: pointer;
             font-size: 16px;
@@ -58,27 +60,32 @@
         }
 
         .image-container button:hover {
-            background-color: #808080; /* Botão cinza ao passar o mouse */
+            background-color: #808080;
+            /* Botão cinza ao passar o mouse */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="image-container">
             <img src="{% static 'imagens/BolsonaroBlackWhite.png' %}" alt="Bolsonaro">
-            <button onclick="window.location.href='http://url1.com';">Jair Messias Bolsonaro</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=2';">Jair Messias
+                Bolsonaro</button>
         </div>
 
         <div class="image-container">
             <img src="{% static 'imagens/LulaBlackWhite.jpg' %}" alt="Lula">
-            <button onclick="window.location.href='http://url2.com';">Luiz Inácio Lula da Silva</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=3';">Luiz Inácio Lula da
+                Silva</button>
         </div>
 
         <div class="image-container">
             <img src="{% static 'imagens/GetulioBlackWhite.jpg' %}" alt="Getúlio Vargas">
-            <button onclick="window.location.href='http://url3.com';">Getúlio Vargas</button>
+            <button onclick="window.location.href='{% url 'chatbot' %}?character_id=4';">Getúlio Vargas</button>
         </div>
     </div>
 </body>
+
 </html>
