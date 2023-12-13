@@ -75,12 +75,12 @@
 
         .popup-content {
             position: relative;
-            width: 500px; /* Defina a largura desejada */
-            height: 100px; /* Defina a altura desejada */
+            width: 500px; 
+            height: 100px; 
             margin: 0 auto;
             padding: 40px;
             background: rgba(255, 255, 255, 0.8);
-            border-radius: 25px; /* Remova o border-radius para torná-lo quadrado */
+            border-radius: 25px;
             text-align: center;
             top: 50%;
             transform: translateY(-50%);
@@ -121,6 +121,26 @@
             background-color: #45a049;
             transform: scale(1.05);
         }
+
+        /* Estilo para o novo botão com tamanho reduzido */
+        .botao-menor {
+            width: 30%; /* Tamanho reduzido */
+            margin: 30px auto 10px; /* Centraliza o botão */
+            padding: 12px 0;
+            border: none;
+            border-radius: 20px;
+            background-color: #101013;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .botao-menor:hover {
+            background-color: #808080;
+            box-shadow: 0 6px 12px rgba(22, 20, 20, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -139,19 +159,20 @@
             <img src="{% static 'imagens/GetulioBlackWhite.jpg' %}" alt="Getúlio Vargas">
             <button onclick="window.location.href='{% url 'chatbot' %}?character_id=3';">Getúlio Vargas</button>
         </div>
+
+        <!-- Novo botão com tamanho reduzido -->
+        <button class="botao-menor" onclick="window.location.href='{% url 'chatbot' %}?character_id=4';">Conversar com Doutrinator</button>
     </div>
 
-    <!-- Pop-up -->
+    <!-- Pop-ups -->
     <div id="popup" class="popup">
         <div class="popup-content">
             <button id="close-btn" onclick="closePopup()">X</button>
             <p style="color: #000000;">Realize o cadastro para ter acesso às Personas ou converse com o Doutrinator</p>
-            <!-- Botão atualizado para redirecionar para um novo URL -->
             <button onclick="window.location.href='{% url 'login' %}';">Login/Cadastro</button>
         </div>
     </div>
 
-    <!-- Pop-up -->
     <div id="popup" class="popup">
         <div class="popup-content">
             <button id="close-btn" onclick="closePopup()">X</button>
@@ -165,8 +186,9 @@
             document.getElementById('popup').style.display = 'none';
         }
 
-        // Para mostrar o pop-up, você pode usar:
-        document.getElementById('popup').style.display = 'block';
+        function suaFuncaoAqui() {
+            // Adicione a ação desejada para este botão
+        }
     </script>
 </body>
 </html>

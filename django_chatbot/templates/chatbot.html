@@ -104,11 +104,11 @@
     }
 
     .image {
-      width: 150px; /* Tamanho da foto aumentado */
-      height: 150px; /* Mantenha a proporção da imagem */
-      border-radius: 75px;
+      width: 200px; /* Aumentado de 150px para 200px */
+      height: 200px; /* Aumentado de 150px para 200px */
+      border-radius: 100px; /* Ajuste para manter a forma circular */
       margin: 0 auto;
-    }
+    } 
 
     h1 {
       margin-top: 10px;
@@ -211,11 +211,11 @@
     }
 
     .image {
-      width: 150px; /* Tamanho da foto aumentado */
-      height: 150px; /* Mantenha a proporção da imagem */
-      border-radius: 75px;
+      width: 200px; /* Aumentado de 150px para 200px */
+      height: 200px; /* Aumentado de 150px para 200px */
+      border-radius: 100px; /* Ajuste para manter a forma circular */
       margin: 0 auto;
-    }
+    } 
 
     h1 {
       margin-top: 10px;
@@ -318,11 +318,119 @@
     }
 
     .image {
-      width: 150px; /* Tamanho da foto aumentado */
-      height: 150px; /* Mantenha a proporção da imagem */
-      border-radius: 75px;
+      width: 200px; /* Aumentado de 150px para 200px */
+      height: 200px; /* Aumentado de 150px para 200px */
+      border-radius: 100px; /* Ajuste para manter a forma circular */
       margin: 0 auto;
+    } 
+
+    h1 {
+      margin-top: 10px;
+      color: #333;
+      font-size: 24px; /* Tamanho do texto reduzido */
     }
+  </style>
+  {% endif %}
+
+  
+  <title>
+    {% if character_id == '4' %}
+    Chat Com Doutrinator
+    {% endif %}
+  </title>
+
+  {% if character_id == '4' %}
+  <style>
+    body,
+    html {
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    .messages-box {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .messages-list {
+      padding-left: 0;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      list-style: none;
+      transition: transform 0.3s;
+    }
+
+    .message:last-child {
+      transform: translateY(20px);
+    }
+
+    .message-text {
+      padding: 15px 20px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .sent {
+      background-color: rgb(47, 45, 49);
+      color: #ffffff;
+      align-self: flex-end;
+      border-radius: 15px 15px 0px 15px;
+    }
+
+    .received {
+      background-color: rgb(13, 153, 163);
+      align-self: flex-start;
+      border-radius: 15px 15px 15px 0px;
+    }
+
+    .message-form {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 15px;
+      background-color: #ffffff;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    .message-input {
+      flex: 1;
+      border: 1px solid #e1e1e1;
+      border-radius: 25px;
+      padding-left: 20px;
+    }
+
+    .btn-send {
+      border-radius: 25px;
+      margin-left: 10px;
+      background-color: #2c2f31;
+      color: #ffffff;
+    }
+
+    .chat-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 7px;
+    }
+
+    .header-container {
+      padding: 20px;
+      text-align: center;
+      background-color: #ffffff;
+      border-bottom: 1px solid #e1e1e1;
+    }
+
+    .image {
+      width: 200px; /* Aumentado de 150px para 200px */
+      height: 200px; /* Aumentado de 150px para 200px */
+      border-radius: 100px; /* Ajuste para manter a forma circular */
+      margin: 0 auto;
+    } 
 
     h1 {
       margin-top: 10px;
@@ -343,7 +451,6 @@
         src="{% static 'imagens/BolsonaroBlackWhite.png' %}"
         alt="Foto do Bolsonaro">
       <h1 class="mt-2">Chat com Bolsonaro</h1>
-      <p>O ID do personagem é: {{ character_id }}</p>
     </div>
 
     <div class="card flex-grow-1">
@@ -384,7 +491,6 @@
         src="{% static 'imagens/LulaBlackWhite.jpg' %}"
         alt="Foto do Bolsonaro">
       <h1 class="mt-2">Chat com Lula</h1>
-      <p>O ID do personagem é: {{ character_id }}</p>
     </div>
 
     <div class="card flex-grow-1">
@@ -396,7 +502,7 @@
                 <b>Lula</b>
               </div>
               <div class="message-content">
-                Olá, sou o Lula, vai um calanguinho ai?
+                Olá, sou o Lula, um político do povo!
               </div>
             </div>
           </li>
@@ -425,7 +531,6 @@
         src="{% static 'imagens/GetulioBlackWhite.jpg' %}"
         alt="Foto do Bolsonaro">
       <h1 class="mt-2">Chat com Getúlio Vargas</h1>
-      <p>O ID do personagem é: {{ character_id }}</p>
     </div>
 
     <div class="card flex-grow-1">
@@ -438,6 +543,46 @@
               </div>
               <div class="message-content">
                 Olá, sou Getúlio Vargas, personagem histórico da política do Brasil!
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <br><br>
+      <br><br>
+      <br><br>
+    </div>
+    <form class="message-form">
+      {%csrf_token%}
+      <div class="input-group">
+        <input type="text" class="form-control message-input" placeholder="Escreva sua mensagem...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary btn-send">Enviar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if character_id == '4' %}
+  <div class="chat-container">
+    <div class="header-container text-center">
+      <img class="image"
+        src="{% static 'imagens/DoutrinatorBlackWhite.jpg' %}"
+        alt="Foto do Bolsonaro">
+      <h1 class="mt-2">Chat com Doutrinator</h1>
+    </div>
+
+    <div class="card flex-grow-1">
+      <div class="card-body messages-box">
+        <ul class="list-unstyled messages-list">
+          <li class="message received">
+            <div class="message-text" style="border-radius: 10px;">
+              <div class="message-sender">
+                <b>Doutrinator</b>
+              </div>
+              <div class="message-content">
+                Olá, sou o Doutrinator, vou sugerir sua opinião política!
               </div>
             </div>
           </li>
@@ -629,6 +774,64 @@
     });
   </script>
   {% endif %}
+
+  {% if character_id == '4' %}
+  <script>
+    $(document).ready(function () {
+      const messagesList = $('.messages-list');
+      const messageForm = $('.message-form');
+      const messageInput = $('.message-input');
+
+      messageForm.on('submit', function (event) {
+        event.preventDefault();
+
+        const message = messageInput.val().trim();
+        if (message.length === 0) {
+          return;
+        }
+
+        const messageItem = $('<li></li>').addClass('message sent').html(`
+              <div class="message-text">
+                  <div class="message-sender">
+                      <b>Você</b>
+                  </div>
+                  <div class="message-content">
+                      ${message}
+                  </div>
+              </div>
+          `);
+        messagesList.append(messageItem);
+
+        messageInput.val('');
+
+        fetch('', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            'csrfmiddlewaretoken': $('[name=csrfmiddlewaretoken]').val(),
+            'message': message,
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            const response = data.response;
+            const messageItem = $('<li></li>').addClass('message received').html(`
+                      <div class="message-text">
+                          <div class="message-sender">
+                            <b>Doutrinator</b>
+                          </div>
+                          <div class="message-content">
+                              ${response}
+                          </div>
+                      </div>
+                  `);
+            messagesList.append(messageItem);
+          });
+      });
+    });
+  </script>
+  {% endif %}
+
   
 </body>
 </html>

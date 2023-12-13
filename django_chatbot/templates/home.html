@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +12,83 @@
             background: url('{% static "imagens/banner7.png" %}');
             background-size: cover;
             background-position: center;
-            min-height: 1000px; 
+            min-height: 1005px;
         }
         .slogan-text {
-        font-family: 'Arial', sans-serif; /* Escolha a fonte que preferir */
-        font-size: 24px; /* Tamanho da fonte */
-        font-weight: bold; /* Peso da fonte */
-        color: whitesmoke; /* Cor da fonte, escolha a cor que desejar */
-        text-shadow: 2px 2px 4px #000000; /* Sombra do texto para destacá-lo */
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: whitesmoke;
+            text-shadow: 2px 2px 4px #000000;
         }
         .hero-logo {
-        width: 500px; /* Aumente o tamanho conforme necessário */
-        height: auto; /* Isso garante que a imagem mantenha sua proporção */
+            width: 500px;
+            height: auto;
+            background-color: rgb(49, 47, 47);
+            padding: 20px;
+            border-radius: 5%;
         }
-
+        .image-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .rounded-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-left: 250px;
+            margin-right: 250px;
+            object-fit: cover;
+        }
+        .text-balloon {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px auto 50px;
+            width: 800px;
+            height: 530px;
+            font-family: 'Arial', sans-serif;
+            font-size: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+            line-height: 1.7;
+        }
+        .column_1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            margin-top: 10px;
+            margin-left: 290px;
+        }
+        .column_2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            margin-top: 10px;
+            margin-right: 290px;
+        }
+        .small-image {
+            width: 180px;
+            height: auto;
+            border-radius: 50%;
+            margin: 10px 0;
+        }
+        .slogan-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
     </style>
 </head>
-
 <body>  
     <header>
         <nav class="navbar">
@@ -39,22 +98,27 @@
             <div class="container">
                 <div class="navbar-brand">Doutrinator</div>
                 <div class="navbar-menu">
-                    <a href="{% url 'home' %}" class="navbar-item">Home</a>
-                    <a href="#" class="navbar-item">Features</a>
-                    <a href="{% url 'about' %}" class="navbar-item">About</a>
+                    <a href="{% url 'home' %}" class="navbar-item">Início</a>
+                    <a href="#" class="navbar-item">Recursos</a>
+                    <a href="{% url 'about' %}" class="navbar-item">Sobre</a>
                     <a href="{% url 'login' %}" class="login-item">
-                        <i class="fa fa-sign-in login-icon"></i> <!-- Ícone de login do FontAwesome -->
-                        Login
+                        <i class="fa fa-sign-in login-icon"></i>
+                        Entrar
                     </a>
                 </div>
+                
             </div>
         </nav>
     </header>
 
     <div class="hero-section">
         <div class="hero-content">
-            <img src="{% static 'imagens/doutrinator.png' %}" alt="DOUTRINATOR" class="hero-logo" style="width: 500px; height: auto;">
-            <p class="slogan-text" style="text-align: center;">Um novo jeito de viver a política.</p>
+            <div class="hero-logo-background">
+                <img src="{% static 'imagens/doutrinator.png' %}" alt="DOUTRINATOR" class="hero-logo">
+            </div>
+            <div class="slogan-container">
+                <p class="slogan-text">Um novo jeito de viver a política.</p>
+            </div>
         </div>
     </div>
 
@@ -73,31 +137,34 @@
         </div>
     </div>
 
-    <div class="section-below-black-rectangle">
-        <p class="additional-text">No vasto cenário tecnológico, onde a política e a interação humana estão
-            constantemente evoluindo, emerge um projeto audacioso que promete revolucionar a forma como discutimos
-            política. Utilizando a poderosa combinação de Django, um popular framework web em Python, e a API do
-            ChatGPT, este projeto visa criar um bot capaz de envolver-se em debates políticos de maneira inteligente e
-            informativa.</p>
+    <div class="container">
+        <div class="column_1">
+            <img src="{% static 'imagens/BolsonaroBlackWhite.png' %}" alt="Image 3" class="small-image" style="margin-bottom: 140px;">
+            <img src="{% static 'imagens/LulaBlackWhite.jpg' %}" alt="Image 4" class="small-image" style="margin-bottom: 20px;">
+        </div>
+        <div class="text-balloon">
+            <p>
+                
+Imagine ter acesso a uma oportunidade única: a possibilidade de engajar-se em conversas profundas com diversos políticos, explorando suas visões, motivações e opiniões de maneira aberta e direta. Essa experiência oferece a chance de compreender as nuances das políticas que moldam nossa sociedade e examinar o impacto delas. Ao fazer isso, você pode desenvolver uma perspectiva mais holística e informada sobre os desafios complexos que nosso mundo enfrenta, bem como possíveis soluções. Esta oportunidade incrível de diálogo e entendimento mútuo entre diferentes atores políticos pode ser a chave para um futuro mais justo e próspero para todos.
+            </p>
+        </div>
+        <div class="column_2">
+            <img src="{% static 'imagens/GetulioBlackWhite.jpg' %}" alt="Image 3" class="small-image" style="margin-bottom: 140px;">
+            <img src="{% static 'imagens/DoutrinatorBlackWhite.jpg' %}" alt="Image 4" class="small-image" style="margin-bottom: 20px;">
+        </div>
     </div>
+    
 
     <script>
-
-        // Função para fixar a navbar no topo com fundo preto após o usuário rolar para baixo
         window.onscroll = function () {
             var navbar = document.querySelector('.navbar');
             if (window.pageYOffset > 0) {
                 navbar.style.top = '0';
-                navbar.style.backgroundColor = '#000'; // Assegura que o fundo preto apareça
+                navbar.style.backgroundColor = '#000';
             } else {
-                navbar.style.top = '0'; // Mantém a navbar no topo mesmo quando o usuário está no topo da página
-                // Opcional: se quiser que a navbar fique transparente quando no topo, descomente a próxima linha
-                // navbar.style.backgroundColor = 'transparent'; 
+                navbar.style.top = '0';
             }
         };
-
     </script>
-
 </body>
-
 </html>
